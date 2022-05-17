@@ -1,5 +1,6 @@
 package train.dao.impl;
 
+import java.util.List;
 import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -54,6 +55,20 @@ public class TrainDaoImpl implements TrainDao {
             return findById.uniqueResultOptional();
         } catch (Exception e) {
             throw new RuntimeException("Can`t get train by id " + id, e);
+        }
+    }
+
+    @Override
+    public List<Train> getAll() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Train> allTrains = session.createQuery(
+                    "select distinct t "
+                            + "from Train t "
+                            + "left join fetch t.locomotives "
+                            + "left join fetch t.wagons", Train.class);
+            return allTrains.getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException("Can`t get all trains from BD", e);
         }
     }
 }

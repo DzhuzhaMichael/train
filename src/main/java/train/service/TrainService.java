@@ -1,11 +1,14 @@
 package train.service;
 
+import java.util.List;
 import train.model.Train;
 
 public interface TrainService {
     Train add(Train train);
 
     Train get(Long id);
+
+    List<Train> getAll();
 
     int getEmptyWeight(Long id);
 

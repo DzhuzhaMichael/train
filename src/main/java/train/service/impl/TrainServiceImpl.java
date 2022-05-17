@@ -1,5 +1,9 @@
 package train.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import train.dao.TrainDao;
@@ -21,6 +25,7 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public Train add(Train train) {
+        isExisted(train);
         return trainDao.add(train);
     }
 
@@ -28,6 +33,11 @@ public class TrainServiceImpl implements TrainService {
     public Train get(Long id) {
         return trainDao.get(id).orElseThrow(
                 () -> new RuntimeException("Can`t get train by id " + id));
+    }
+
+    @Override
+    public List<Train> getAll() {
+        return trainDao.getAll();
     }
 
     @Override
@@ -109,5 +119,29 @@ public class TrainServiceImpl implements TrainService {
         }
         return (maxNumberOfPassengers <= PASSENGERS_NUMBER_NEEDS_C0NDUCTOR)
                 ? 1 : maxNumberOfPassengers / PASSENGERS_NUMBER_NEEDS_C0NDUCTOR;
+    }
+
+    private void isExisted(Train train) {
+        List<Train> allTrainsFromBd = trainDao.getAll();
+        List<Locomotive> locomotivesOfExistingTrains = allTrainsFromBd.stream()
+                .map(Train::getLocomotives)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        List<Wagon> wagonsOfExistingTrains = allTrainsFromBd.stream()
+                .map(Train::getWagons)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        List<Locomotive> currentTrainLocomotives = new ArrayList<>(train.getLocomotives());
+        List<Wagon> currentTrainWagons = new ArrayList<>(train.getWagons());
+        for (Locomotive currentTrainLocomotive : currentTrainLocomotives) {
+            if (locomotivesOfExistingTrains.contains(currentTrainLocomotive)) {
+                throw new RuntimeException("Locomotives can only be assigned to one train at a time");
+            }
+        }
+        for (Wagon currentTrainWagon : currentTrainWagons) {
+            if (wagonsOfExistingTrains.contains(currentTrainWagon)) {
+                throw new RuntimeException("Wagons can only be assigned to one train at a time");
+            }
+        }
     }
 }

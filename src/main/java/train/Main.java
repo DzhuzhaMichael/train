@@ -1,6 +1,7 @@
 package train;
 
 import java.util.Set;
+import java.util.SortedSet;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import train.config.AppConfig;
 import train.model.EngineType;
@@ -14,7 +15,11 @@ import train.service.WagonService;
 
 public class Main {
 
+
     public static void main(String[] args) {
+        SortedSet<Locomotive> locomotives;
+        SortedSet<Wagon> wagons;
+
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
         LocomotiveService locomotiveService
@@ -34,8 +39,21 @@ public class Main {
         firstLocomotive.setNumberOfPassengers(2);
         firstLocomotive.setGoodsLoadingWeight(200);
 
+        Locomotive secondLocomotive = new Locomotive();
+        secondLocomotive.setTypeOfDesignation("DSGNTN-1");
+        secondLocomotive.setManufacturer("Hundai");
+        secondLocomotive.setSerialNumber("999-999-999");
+        secondLocomotive.setEngineType(EngineType.DIESEL.toString());
+        secondLocomotive.setYearOfProduction(2000);
+        secondLocomotive.setEmptyWeight(1400000);
+        secondLocomotive.setLength(18);
+        secondLocomotive.setTractiveEffort(1100000);
+        secondLocomotive.setNumberOfPassengers(2);
+        secondLocomotive.setGoodsLoadingWeight(220);
+
         Locomotive locoFromDb = locomotiveService.add(firstLocomotive);
         System.out.println(locomotiveService.get(locoFromDb.getId()));
+        locomotiveService.add(secondLocomotive);
 
         Wagon firstWagon = new Wagon();
         firstWagon.setTypeOfDesignation("DSGNTN-P");
@@ -87,10 +105,15 @@ public class Main {
 
         Train trainOne = new Train();
         trainOne.setLocomotives(Set.of(firstLocomotive));
-        trainOne.setWagons(Set.of(firstWagon, secondWagon, thirdWagon, fourthWagon));
+        trainOne.setWagons(Set.of(firstWagon, secondWagon));
 
         Train trainFromDb = trainService.add(trainOne);
         System.out.println(trainService.get(trainFromDb.getId()));
+
+        Train trainSecond = new Train();
+        trainSecond.setLocomotives(Set.of(secondLocomotive));
+        trainSecond.setWagons(Set.of(thirdWagon, fourthWagon));
+        trainService.add(trainSecond);
 
         System.out.println("Empty weight: "
                 + trainService.getEmptyWeight(trainFromDb.getId()));
@@ -115,5 +138,7 @@ public class Main {
 
         System.out.println("Necessary number of conductors: "
                 + trainService.getNecessaryConductorsNumber(trainFromDb.getId()));
+
+        System.out.println(trainService.getAll());
     }
 }
