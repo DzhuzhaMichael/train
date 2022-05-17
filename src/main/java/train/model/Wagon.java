@@ -29,5 +29,4 @@ public class Wagon {
     private int length;
     private int numberOfPassengers;
     private int goodsLoadingWeight;
-
 }

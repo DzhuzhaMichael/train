@@ -1,4 +1,4 @@
-package train.dao;
+package train.dao.impl;
 
 import java.util.Optional;
 import org.hibernate.Session;
@@ -6,33 +6,34 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import train.model.Wagon;
+import train.dao.LocomotiveDao;
+import train.model.Locomotive;
 
 @Repository
-public class WagonDaoImpl implements WagonDao {
+public class LocomotiveDaoImpl implements LocomotiveDao {
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public WagonDaoImpl(SessionFactory sessionFactory) {
+    public LocomotiveDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public Wagon add(Wagon wagon) {
+    public Locomotive add(Locomotive locomotive) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(wagon);
+            session.save(locomotive);
             transaction.commit();
-            return wagon;
+            return locomotive;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can`t insert wagon to DB. Wagon: "
-            + wagon, e);
+            throw new RuntimeException("Can`t insert locomotive to DB. Locomotive: "
+            + locomotive, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -41,11 +42,11 @@ public class WagonDaoImpl implements WagonDao {
     }
 
     @Override
-    public Optional<Wagon> get(Long id) {
+    public Optional<Locomotive> get(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session.get(Wagon.class, id));
+            return Optional.ofNullable(session.get(Locomotive.class, id));
         } catch (Exception e) {
-            throw new RuntimeException("Can`t get wagon by id " + id, e);
+            throw new RuntimeException("Can`t get locomotive by id " + id, e);
         }
     }
 }

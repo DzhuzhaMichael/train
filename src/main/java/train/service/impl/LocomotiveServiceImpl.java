@@ -1,9 +1,10 @@
-package train.service;
+package train.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import train.dao.LocomotiveDao;
 import train.model.Locomotive;
+import train.service.LocomotiveService;
 
 @Service
 public class LocomotiveServiceImpl implements LocomotiveService {
