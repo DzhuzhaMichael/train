@@ -39,6 +39,7 @@ class TrainServiceImplTest {
         firstWagon.setNumberOfPassengers(58);
         locomotives = Set.of(firstLocomotive);
         wagons = Set.of(firstWagon);
+        train.setId(1L);
         train.setLocomotives(locomotives);
         train.setWagons(wagons);
     }
@@ -84,6 +85,7 @@ class TrainServiceImplTest {
     void getEmptyWeight_ok() {
         Mockito.when(trainDao.get(train.getId())).thenReturn(Optional.of(train));
         int actual = trainService.getEmptyWeight(train.getId());
+        Assertions.assertNotNull(actual);
         Assertions.assertEquals(firstLocomotive.getEmptyWeight()
                 + firstWagon.getEmptyWeight(), actual);
     }
@@ -92,6 +94,7 @@ class TrainServiceImplTest {
     void getMaxNumberOfPassengers_ok() {
         Mockito.when(trainDao.get(train.getId())).thenReturn(Optional.of(train));
         int actual = trainService.getMaxNumberOfPassengers(train.getId());
+        Assertions.assertNotNull(actual);
         Assertions.assertEquals(firstLocomotive.getNumberOfPassengers()
                 + firstWagon.getNumberOfPassengers(), actual);
     }
@@ -100,6 +103,7 @@ class TrainServiceImplTest {
     void getMaxLoadingWeight_ok() {
         Mockito.when(trainDao.get(train.getId())).thenReturn(Optional.of(train));
         int actual = trainService.getMaxLoadingWeight(train.getId());
+        Assertions.assertNotNull(actual);
         Assertions.assertEquals(firstLocomotive.getGoodsLoadingWeight()
                 + firstWagon.getGoodsLoadingWeight(), actual);
     }
@@ -108,6 +112,7 @@ class TrainServiceImplTest {
     void getMaxTrainLoading_ok() {
         Mockito.when(trainDao.get(train.getId())).thenReturn(Optional.of(train));
         int actual = trainService.getMaxTrainLoading(train.getId());
+        Assertions.assertNotNull(actual);
         Assertions.assertEquals(((firstLocomotive.getNumberOfPassengers()
                         + firstWagon.getNumberOfPassengers()) * PASSENGER_WEIGHT)
                         + (firstLocomotive.getGoodsLoadingWeight()
@@ -118,6 +123,7 @@ class TrainServiceImplTest {
     void getMaxTotalTrainWeight_ok() {
         Mockito.when(trainDao.get(train.getId())).thenReturn(Optional.of(train));
         int actual = trainService.getMaxTotalTrainWeight(train.getId());
+        Assertions.assertNotNull(actual);
         Assertions.assertEquals(((firstLocomotive.getEmptyWeight()
                 + firstWagon.getEmptyWeight())
                 + ((firstLocomotive.getNumberOfPassengers()
@@ -132,6 +138,7 @@ class TrainServiceImplTest {
         firstWagon.setLength(20);
         Mockito.when(trainDao.get(train.getId())).thenReturn(Optional.of(train));
         int actual = trainService.getTrainLength(train.getId());
+        Assertions.assertNotNull(actual);
         Assertions.assertEquals(firstLocomotive.getLength()
                 + firstWagon.getLength(), actual);
     }

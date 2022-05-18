@@ -23,6 +23,6 @@ public class LocomotiveServiceImpl implements LocomotiveService {
     @Override
     public Locomotive get(Long id) {
         return locomotiveDao.get(id).orElseThrow(
-                () -> new RuntimeException("Can`t get locomotive by id" + id));
+                () -> new RuntimeException("Can`t get locomotive by id " + id));
     }
 }

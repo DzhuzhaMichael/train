@@ -1,4 +1,3 @@
-/*
 package train;
 
 import java.util.Set;
@@ -15,7 +14,6 @@ import train.service.TrainService;
 import train.service.WagonService;
 
 public class Main {
-
 
     public static void main(String[] args) {
         SortedSet<Locomotive> locomotives;
@@ -143,4 +141,4 @@ public class Main {
         System.out.println(trainService.getAll());
     }
 }
-*/
+

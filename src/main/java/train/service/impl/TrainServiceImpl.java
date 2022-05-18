@@ -133,7 +133,8 @@ public class TrainServiceImpl implements TrainService {
         List<Wagon> currentTrainWagons = new ArrayList<>(train.getWagons());
         for (Locomotive currentTrainLocomotive : currentTrainLocomotives) {
             if (locomotivesOfExistingTrains.contains(currentTrainLocomotive)) {
-                throw new RuntimeException("Locomotives can only be assigned to one train at a time");
+                throw new RuntimeException("Locomotives can only be assigned to one "
+                        + "train at a time");
             }
         }
         for (Wagon currentTrainWagon : currentTrainWagons) {
