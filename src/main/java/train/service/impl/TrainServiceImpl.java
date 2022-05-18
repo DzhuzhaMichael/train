@@ -114,11 +114,9 @@ public class TrainServiceImpl implements TrainService {
     public int getNecessaryConductorsNumber(Long id) {
         Train trainFromDb = trainDao.get(id).get();
         int maxNumberOfPassengers = getMaxNumberOfPassengers(trainFromDb.getId());
-        if (maxNumberOfPassengers == 0) {
-            return 0;
-        }
-        return (maxNumberOfPassengers <= PASSENGERS_NUMBER_NEEDS_C0NDUCTOR)
-                ? 1 : maxNumberOfPassengers / PASSENGERS_NUMBER_NEEDS_C0NDUCTOR;
+        int conductorsInvolved = maxNumberOfPassengers / PASSENGERS_NUMBER_NEEDS_C0NDUCTOR;
+        return (maxNumberOfPassengers % PASSENGERS_NUMBER_NEEDS_C0NDUCTOR == 0)
+                ? conductorsInvolved : conductorsInvolved + 1;
     }
 
     private void isExisted(Train train) {
