@@ -16,7 +16,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Wagon implements Comparable<Wagon> {
+public class Wagon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,9 +29,4 @@ public class Wagon implements Comparable<Wagon> {
     private int length;
     private int numberOfPassengers;
     private int goodsLoadingWeight;
-
-    @Override
-    public int compareTo(Wagon o) {
-        return (int) (this.id - o.getId());
-    }
 }
