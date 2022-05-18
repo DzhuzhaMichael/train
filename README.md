@@ -1,6 +1,6 @@
 # train
 This is simple train-builder that gives opportunity to build the train according to the following model:
-![Scheme-1](https://user-images.githubusercontent.com/92114777/169164030-46c95c38-798e-4574-b028-0595ec5e5a8b.jpg)
+![Scheme-2](https://user-images.githubusercontent.com/92114777/169164259-17419dd4-3455-4d75-a719-63106aa5b40a.jpg)
 
 ## technologies
 * Apache Maven
