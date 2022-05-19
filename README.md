@@ -10,7 +10,7 @@ This is simple train-builder that gives opportunity to build the train according
 * Java 11
 * JUnit 5
 * Mockito
-* Spring Data
+* Spring Core
 * Project Lombok
 
 ## maven clean package
